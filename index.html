@@ -381,6 +381,224 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
+        .achievement-share-buttons {
+            margin-top: 15px;
+        }
+
+        .share-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .share-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        #shareMenu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        #shareMenu.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .share-menu-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+            max-width: 90%;
+            width: 300px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        #shareMenu.show .share-menu-content {
+            transform: scale(1);
+        }
+
+        .share-menu-content h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .share-menu-content p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .share-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .social-share-btn {
+            padding: 12px 8px;
+            border: none;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: white;
+        }
+
+        .social-share-btn.twitter {
+            background: linear-gradient(45deg, #1da1f2, #0d95e8);
+        }
+
+        .social-share-btn.facebook {
+            background: linear-gradient(45deg, #4267B2, #365899);
+        }
+
+        .social-share-btn.copy {
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+        }
+
+        .social-share-btn.generic {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+
+        .social-share-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .social-share-btn:active {
+            transform: scale(0.95);
+        }
+
+        .close-share-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .close-share-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* SHARE TAB STYLES */
+        .share-section {
+            padding: 20px;
+        }
+
+        .share-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .share-option-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 2px solid transparent;
+        }
+
+        .share-content {
+            flex: 1;
+        }
+
+        .share-option-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .share-option-card:active {
+            transform: translateY(0);
+        }
+
+        .share-icon {
+            font-size: 32px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .share-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .share-description {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+        }
+
+        .share-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8e44ad;
+        }
+
+        @media (max-width: 480px) {
+            .share-option-card {
+                padding: 15px;
+                gap: 12px;
+            }
+            
+            .share-icon {
+                font-size: 28px;
+                min-width: 40px;
+            }
+            
+            .share-title {
+                font-size: 16px;
+            }
+            
+            .share-description {
+                font-size: 12px;
+            }
+            
+            .share-value {
+                font-size: 14px;
+            }
+        }
+
         #dailyRewardPopup {
             position: absolute;
             top: 50%;
@@ -478,6 +696,32 @@
         }
 
         #menuToggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        #shareButton {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border: 3px solid #fff;
+            border-radius: 50%;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            pointer-events: auto;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #shareButton:hover {
             transform: scale(1.1);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         }
@@ -877,6 +1121,7 @@
             
             <!-- Menu toggle button -->
             <button id="menuToggle">🛍️</button>
+            <button id="shareButton">📤</button>
             
             <!-- Stats panel -->
             <div id="statsPanel">
@@ -889,6 +1134,9 @@
             <div id="achievementNotification">
                 <h3>🏆 ACHIEVEMENT UNLOCKED!</h3>
                 <p id="achievementText">Welcome Sailor!</p>
+                <div class="achievement-share-buttons">
+                    <button id="shareAchievementBtn" class="share-btn">📤 Share</button>
+                </div>
             </div>
             
             <!-- Daily reward popup -->
@@ -896,6 +1144,21 @@
                 <h2>🎁 Daily Reward!</h2>
                 <p id="dailyRewardText">Welcome back, Sailor!</p>
                 <button id="claimRewardBtn" onclick="game.claimDailyReward()" style="margin-top: 15px; padding: 10px 20px; border: none; border-radius: 10px; background: #fff; color: #8e44ad; font-weight: bold; cursor: pointer;">Claim Reward!</button>
+            </div>
+
+            <!-- Share Menu -->
+            <div id="shareMenu">
+                <div class="share-menu-content">
+                    <h3>📤 Share Your Achievement!</h3>
+                    <p id="shareText">Share your awesome pig progress!</p>
+                    <div class="share-buttons">
+                        <button class="social-share-btn twitter" onclick="game.shareToTwitter()">🐦 Twitter</button>
+                        <button class="social-share-btn facebook" onclick="game.shareToFacebook()">📘 Facebook</button>
+                        <button class="social-share-btn copy" onclick="game.copyToClipboard()">📋 Copy Link</button>
+                        <button class="social-share-btn generic" onclick="game.shareGeneric()">📱 Share</button>
+                    </div>
+                    <button id="closeShareMenu" class="close-share-btn">✕</button>
+                </div>
             </div>
         </div>
 
@@ -906,6 +1169,7 @@
                     <button class="menu-tab active" data-tab="shop">Shop</button>
                     <button class="menu-tab" data-tab="leaderboard">Leaderboard</button>
                     <button class="menu-tab" data-tab="inventory">Inventory</button>
+                    <button class="menu-tab" data-tab="share">Share</button>
                 </div>
                 <button id="closeMenu">✕</button>
             </div>
@@ -990,6 +1254,17 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- SHARE TAB -->
+                <div id="shareTab" class="tab-panel">
+                    <div class="share-section">
+                        <h3 class="category-title">📤 Share Your Progress</h3>
+                        
+                        <div class="share-options" id="shareOptionsContainer">
+                            <!-- Share options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1015,7 +1290,12 @@
                     dailyRewardPopup: document.getElementById('dailyRewardPopup'),
                     menuToggle: document.getElementById('menuToggle'),
                     shopMenu: document.getElementById('shopMenu'),
-                    closeMenu: document.getElementById('closeMenu')
+                    closeMenu: document.getElementById('closeMenu'),
+                    shareButton: document.getElementById('shareButton'),
+                    shareMenu: document.getElementById('shareMenu'),
+                    shareText: document.getElementById('shareText'),
+                    closeShareMenu: document.getElementById('closeShareMenu'),
+                    shareAchievementBtn: document.getElementById('shareAchievementBtn')
                 };
 
                 // Initialize audio context for sound effects
@@ -1164,6 +1444,8 @@
                     bubbleSpawnTimer: 0,
                     bubbleSpawnRate: 90, // 1.5 seconds at 60fps
                     score: 0,
+                    highScore: this.loadHighScore(),
+                    highestCombo: this.loadHighestCombo(),
                     // New power-up states
                     lightningStormCooldown: 0,
                     rainbowModeActive: false,
@@ -1211,6 +1493,24 @@
 
             saveTokens() {
                 localStorage.setItem('pigmoonTokens', this.gameState.tokens.toString());
+            }
+
+            loadHighScore() {
+                const saved = localStorage.getItem('pigmoonHighScore');
+                return saved ? parseInt(saved) : 0;
+            }
+
+            saveHighScore() {
+                localStorage.setItem('pigmoonHighScore', this.gameState.highScore.toString());
+            }
+
+            loadHighestCombo() {
+                const saved = localStorage.getItem('pigmoonHighestCombo');
+                return saved ? parseInt(saved) : 0;
+            }
+
+            saveHighestCombo() {
+                localStorage.setItem('pigmoonHighestCombo', this.gameState.highestCombo.toString());
             }
 
             loadStats() {
@@ -1334,6 +1634,18 @@
                 this.ui.shopMenu.addEventListener('click', (e) => {
                     if (e.target === this.ui.shopMenu) {
                         this.closeShopMenu();
+                    }
+                });
+
+                // Share button event listeners
+                this.ui.shareButton.addEventListener('click', () => this.openShareMenu('general'));
+                this.ui.closeShareMenu.addEventListener('click', () => this.closeShareMenu());
+                this.ui.shareAchievementBtn.addEventListener('click', () => this.openShareMenu('achievement'));
+                
+                // Close share menu when clicking outside
+                this.ui.shareMenu.addEventListener('click', (e) => {
+                    if (e.target === this.ui.shareMenu) {
+                        this.closeShareMenu();
                     }
                 });
             }
@@ -1509,6 +1821,22 @@
                 this.stats.totalTaps++;
                 if (this.gameState.combo > this.stats.highestCombo) {
                     this.stats.highestCombo = this.gameState.combo;
+                }
+
+                // Check for new high score
+                if (this.gameState.score > this.gameState.highScore) {
+                    this.gameState.highScore = this.gameState.score;
+                    this.saveHighScore();
+                    this.showNotification('🏆 NEW HIGH SCORE! 🏆', 2000);
+                }
+
+                // Check for new combo record
+                if (this.gameState.combo > this.gameState.highestCombo) {
+                    this.gameState.highestCombo = this.gameState.combo;
+                    this.saveHighestCombo();
+                    if (this.gameState.combo >= 10) {
+                        this.showNotification(`💥 NEW COMBO RECORD: ${this.gameState.combo}x! 💥`, 2000);
+                    }
                 }
 
                 // Sound effects and haptics
@@ -1744,6 +2072,8 @@
                     this.updateLeaderboard('highScore');
                 } else if (tabName === 'inventory') {
                     this.updateInventoryDisplay();
+                } else if (tabName === 'share') {
+                    this.populateShareOptions();
                 }
                 
                 this.playSound(550, 0.1, 'sine');
@@ -1766,6 +2096,7 @@
                 this.populateShopGrids();
                 this.updateLeaderboard('highScore');
                 this.updateInventoryDisplay();
+                this.populateShareOptions();
             }
 
             populateShopGrids() {
@@ -1907,6 +2238,13 @@
                     }
                     
                     this.playSound(880, 0.5, 'triangle');
+
+                    // Share purchase for epic/legendary items
+                    if (item.rarity === 'epic' || item.rarity === 'legendary') {
+                        setTimeout(() => {
+                            this.showNotification(`📤 Share your new ${item.name}!`, 2000);
+                        }, 1000);
+                    }
                     this.vibrate([100, 50, 100]);
                     this.createFloatingText(`${item.name} purchased!`, this.canvasWidth / 2, this.canvasHeight / 2);
                 } else {
@@ -2165,6 +2503,67 @@
                 }, 3000);
             }
 
+            populateShareOptions() {
+                const container = document.getElementById('shareOptionsContainer');
+                if (!container) return;
+
+                const shareOptions = [
+                    {
+                        icon: '🏆',
+                        title: 'High Score',
+                        description: 'Share your record-breaking score!',
+                        getValue: () => `${this.gameState.highScore.toLocaleString()} points`,
+                        action: 'shareHighScore'
+                    },
+                    {
+                        icon: '💥',
+                        title: 'Best Combo',
+                        description: 'Show off your combo skills!',
+                        getValue: () => `${this.gameState.highestCombo}x combo`,
+                        action: 'shareCombo'
+                    },
+                    {
+                        icon: '💰',
+                        title: 'Token Wealth',
+                        description: 'Flex your $PIGMOON riches!',
+                        getValue: () => `${this.gameState.tokens.toLocaleString()} tokens`,
+                        action: 'shareTokens'
+                    },
+                    {
+                        icon: '⚓',
+                        title: 'Sailor Rank',
+                        description: 'Broadcast your pig mastery!',
+                        getValue: () => `Level ${this.gameState.level}`,
+                        action: 'shareLevel'
+                    },
+                    {
+                        icon: '🔥',
+                        title: 'Daily Streak',
+                        description: 'Show your dedication!',
+                        getValue: () => `${this.stats.dailyStreak} days`,
+                        action: 'shareStreak'
+                    },
+                    {
+                        icon: '🐷',
+                        title: 'General Share',
+                        description: 'Invite friends to play!',
+                        getValue: () => 'Spread the pig love!',
+                        action: 'openShareGeneral'
+                    }
+                ];
+
+                container.innerHTML = shareOptions.map(option => `
+                    <div class="share-option-card" onclick="game.${option.action}()">
+                        <div class="share-icon">${option.icon}</div>
+                        <div class="share-content">
+                            <div class="share-title">${option.title}</div>
+                            <div class="share-description">${option.description}</div>
+                            <div class="share-value">${option.getValue()}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
             // DAILY REWARDS SYSTEM
             checkDailyReward() {
                 const today = new Date().toDateString();
@@ -2226,6 +2625,14 @@
                 this.createFloatingText(`+${this.dailyRewardAmount} Daily Bonus!`, this.canvasWidth / 2, this.canvasHeight / 2);
                 
                 this.playSound(660, 0.6, 'triangle');
+
+                // Share streak milestones
+                const streak = this.stats.dailyStreak;
+                if (streak === 7 || streak === 14 || streak === 30 || streak % 50 === 0) {
+                    setTimeout(() => {
+                        this.showNotification(`📤 Share your ${streak}-day streak!`, 2500);
+                    }, 1500);
+                }
             }
 
             // UI HELPERS
@@ -2581,6 +2988,247 @@
                 this.updateUI();
                 this.saveTokens();
                 console.log(`Added ${amount} tokens. Total: ${this.gameState.tokens}`);
+            }
+
+            // SOCIAL SHARING SYSTEM
+            openShareMenu(type) {
+                this.currentShareType = type;
+                this.currentShareData = this.generateShareData(type);
+                
+                this.ui.shareText.textContent = this.currentShareData.text;
+                this.ui.shareMenu.classList.add('show');
+                
+                // If sharing from achievement, hide the achievement notification
+                if (type === 'achievement') {
+                    this.ui.achievementNotification.classList.remove('show');
+                }
+            }
+
+            closeShareMenu() {
+                this.ui.shareMenu.classList.remove('show');
+                this.currentShareType = null;
+                this.currentShareData = null;
+            }
+
+            generateShareData(type) {
+                const gameUrl = "https://petemoulton.github.io/bubble-pig-sailor-moon-tapper/";
+                const hashtags = "#BubblePig #SailorMoon #PlayToEarn #PIGMOON #TapToEarn";
+                
+                let title = "Bubble Pig Sailor Moon Tapper";
+                let text = "";
+
+                switch(type) {
+                    case 'achievement':
+                        const achievement = this.getLastAchievement();
+                        text = `Just unlocked '${achievement.title}' in Bubble Pig Sailor Moon Tapper! 🐷⭐ ${achievement.description} 💥`;
+                        break;
+                    
+                    case 'highScore':
+                        text = `New high score: ${this.gameState.highScore.toLocaleString()} points! 🏆 My sailor pig is unstoppable!`;
+                        break;
+                    
+                    case 'combo':
+                        text = `Just hit a ${this.gameState.highestCombo}x combo in the most ridiculous game ever! 🐷⚓💫`;
+                        break;
+                    
+                    case 'tokens':
+                        text = `Earned ${this.gameState.tokens.toLocaleString()} $PIGMOON tokens! 💰🐷 Building my pig empire!`;
+                        break;
+                    
+                    case 'level':
+                        text = `Reached Sailor Rank ${this.gameState.level}! This pig has mastered the art of bubble destruction! 🐷‍⚓⭐`;
+                        break;
+                    
+                    case 'streak':
+                        text = `${this.stats.dailyStreak} day login streak! 🔥 This pig sailor never gives up! ⚓🐷`;
+                        break;
+                    
+                    case 'purchase':
+                        text = `Just bought something epic in Bubble Pig Sailor Moon Tapper! 👑🐷 My pig is now LEGENDARY! ✨`;
+                        break;
+                    
+                    default:
+                        text = `Playing the most addictive sailor pig game ever! 🐷⚓ Can you beat my ${this.gameState.highScore.toLocaleString()} points?`;
+                }
+
+                return {
+                    title: title,
+                    text: text + " " + hashtags,
+                    url: gameUrl,
+                    plainText: text
+                };
+            }
+
+            getLastAchievement() {
+                // Get the most recently unlocked achievement
+                const achievementsList = [
+                    { id: 'firstTap', title: 'Welcome Sailor!', description: 'Tap your first bubble' },
+                    { id: 'speedDemon', title: 'Rapid Fire!', description: '10 taps in 2 seconds' },
+                    { id: 'tokenCollector', title: 'Piggy Bank!', description: 'Earn 1000 total tokens' },
+                    { id: 'powerUser', title: 'Magic Master!', description: 'Use 5 power-ups' },
+                    { id: 'comboKing', title: 'Bubble Destroyer!', description: 'Get 20x combo' },
+                    { id: 'levelUp', title: 'Sailor Rank Up!', description: 'Reach level 10' },
+                    { id: 'richPig', title: 'Token Billionaire!', description: 'Have 500 tokens at once' },
+                    { id: 'weekStreak', title: 'Week Warrior!', description: '7-day login streak' }
+                ];
+                
+                // Find the last achieved one or default to first
+                for (let i = achievementsList.length - 1; i >= 0; i--) {
+                    if (this.achievements[achievementsList[i].id]) {
+                        return achievementsList[i];
+                    }
+                }
+                return achievementsList[0];
+            }
+
+            shareToTwitter() {
+                const data = this.currentShareData;
+                const twitterText = encodeURIComponent(data.text);
+                const twitterUrl = encodeURIComponent(data.url);
+                
+                const shareUrl = `https://twitter.com/intent/tweet?text=${twitterText}&url=${twitterUrl}`;
+                window.open(shareUrl, '_blank');
+                this.closeShareMenu();
+            }
+
+            shareToFacebook() {
+                const data = this.currentShareData;
+                const facebookUrl = encodeURIComponent(data.url);
+                const facebookText = encodeURIComponent(data.plainText);
+                
+                const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${facebookUrl}&quote=${facebookText}`;
+                window.open(shareUrl, '_blank');
+                this.closeShareMenu();
+            }
+
+            async copyToClipboard() {
+                const data = this.currentShareData;
+                const textToCopy = `${data.plainText}\n\nPlay now: ${data.url}`;
+                
+                try {
+                    if (navigator.clipboard && window.isSecureContext) {
+                        await navigator.clipboard.writeText(textToCopy);
+                        this.showNotification('📋 Copied to clipboard!', 1500);
+                    } else {
+                        // Fallback for older browsers
+                        const textArea = document.createElement('textarea');
+                        textArea.value = textToCopy;
+                        textArea.style.position = 'absolute';
+                        textArea.style.left = '-999999px';
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        this.showNotification('📋 Copied to clipboard!', 1500);
+                    }
+                } catch (err) {
+                    console.error('Failed to copy to clipboard:', err);
+                    this.showNotification('❌ Copy failed - try manually!', 2000);
+                }
+                this.closeShareMenu();
+            }
+
+            shareGeneric() {
+                const data = this.currentShareData;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: data.title,
+                        text: data.plainText,
+                        url: data.url
+                    }).then(() => {
+                        console.log('Share successful');
+                    }).catch((error) => {
+                        console.log('Share failed:', error);
+                        // Fallback to copy to clipboard
+                        this.copyToClipboard();
+                    });
+                } else {
+                    // Fallback to copy to clipboard
+                    this.copyToClipboard();
+                }
+                this.closeShareMenu();
+            }
+
+            showNotification(message, duration = 2000) {
+                // Create a temporary notification
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: linear-gradient(45deg, #667eea, #764ba2);
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 25px;
+                    font-weight: bold;
+                    z-index: 5000;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                    transition: all 0.3s ease;
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translate(-50%, -50%) scale(0.8)';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, duration);
+            }
+
+            // Enhanced achievement unlocking with sharing options
+            unlockAchievementWithShare(id, title, description) {
+                this.achievements[id] = true;
+                this.saveAchievements();
+                
+                // Store the current achievement for sharing
+                this.currentAchievement = { id, title, description };
+                
+                // Show achievement notification with share button
+                const notification = this.ui.achievementNotification;
+                notification.querySelector('#achievementText').textContent = `${title} - ${description}`;
+                notification.classList.add('show');
+                
+                this.playSound(880, 0.8, 'triangle');
+                this.vibrate([200, 100, 200]);
+                
+                setTimeout(() => {
+                    if (notification.classList.contains('show')) {
+                        notification.classList.remove('show');
+                    }
+                }, 5000); // Longer timeout to allow sharing
+            }
+
+            // Quick share functions for various achievements
+            shareHighScore() {
+                this.openShareMenu('highScore');
+            }
+
+            shareCombo() {
+                this.openShareMenu('combo');
+            }
+
+            shareTokens() {
+                this.openShareMenu('tokens');
+            }
+
+            shareLevel() {
+                this.openShareMenu('level');
+            }
+
+            shareStreak() {
+                this.openShareMenu('streak');
+            }
+
+            sharePurchase() {
+                this.openShareMenu('purchase');
+            }
+
+            openShareGeneral() {
+                this.openShareMenu('general');
             }
         }
 
