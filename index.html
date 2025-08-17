@@ -116,34 +116,155 @@
             color: #8e44ad;
         }
 
-        #powerUpButton {
+        .powerUpButton {
             position: absolute;
-            bottom: 40px;
-            right: 20px;
             width: 60px;
             height: 60px;
             background: linear-gradient(45deg, #f39c12, #e67e22);
-            border: none;
+            border: 3px solid #fff;
             border-radius: 50%;
             font-size: 24px;
             color: white;
             cursor: pointer;
             pointer-events: auto;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             transition: all 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
 
-        #powerUpButton:active {
+        #powerUpButton {
+            bottom: 140px;
+            right: 20px;
+        }
+
+        #lightningStorm {
+            bottom: 80px;
+            right: 20px;
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+        }
+
+        #rainbowMode {
+            bottom: 140px;
+            left: 20px;
+            background: linear-gradient(45deg, #e67e22, #f39c12, #e74c3c, #9b59b6);
+        }
+
+        #megaBubble {
+            bottom: 80px;
+            left: 20px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+        }
+
+        #sailorSpecial {
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            font-size: 32px;
+            background: linear-gradient(45deg, #e91e63, #8e24aa, #3f51b5);
+            animation: specialPulse 2s ease-in-out infinite;
+        }
+
+        .powerUpButton:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .powerUpButton:active {
             transform: scale(0.95);
         }
 
-        #powerUpButton.active {
+        .powerUpButton.active {
             animation: powerUpPulse 1s ease infinite;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+
+        .powerUpButton.disabled {
+            background: linear-gradient(45deg, #7f8c8d, #95a5a6);
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none;
+        }
+
+        .powerUpButton.disabled:hover {
+            transform: none;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .powerUpButton.pressed {
+            transform: scale(0.9);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .powerUpButton.cooldown {
+            background: linear-gradient(45deg, #7f8c8d, #95a5a6);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        #powerUpCost {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: bold;
+            pointer-events: none;
         }
 
         @keyframes powerUpPulse {
             0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(243, 156, 18, 0.5); }
             50% { transform: scale(1.1); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.8); }
+        }
+
+        @keyframes specialPulse {
+            0%, 100% { transform: translateX(-50%) scale(1); box-shadow: 0 6px 25px rgba(233, 30, 99, 0.6); }
+            50% { transform: translateX(-50%) scale(1.1); box-shadow: 0 8px 30px rgba(233, 30, 99, 0.9); }
+        }
+
+        @keyframes lightning {
+            0%, 100% { opacity: 0; }
+            10%, 30%, 50%, 70%, 90% { opacity: 1; }
+            20%, 40%, 60%, 80% { opacity: 0.3; }
+        }
+
+        @keyframes rainbowShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        @keyframes sailorTransform {
+            0% { transform: translateX(-50%) scale(1) rotate(0deg); }
+            25% { transform: translateX(-50%) scale(1.2) rotate(90deg); }
+            50% { transform: translateX(-50%) scale(1.5) rotate(180deg); }
+            75% { transform: translateX(-50%) scale(1.2) rotate(270deg); }
+            100% { transform: translateX(-50%) scale(1) rotate(360deg); }
+        }
+
+        @keyframes megaBubbleSparkle {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 255, 255, 0.8); }
+        }
+
+        body.rainbow-mode {
+            background: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080);
+            background-size: 800% 800%;
+            animation: gradientShift 2s ease infinite, rainbowShift 3s linear infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+            20%, 40%, 60%, 80% { transform: translateX(3px); }
         }
 
         .floatingText {
@@ -219,6 +340,506 @@
                 transform: scale(0) translateY(-30px);
             }
         }
+
+        .megaBubble {
+            animation: megaBubbleSparkle 1s ease infinite !important;
+            border: 3px solid gold !important;
+        }
+
+        .lightningEffect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            pointer-events: none;
+            animation: lightning 0.3s ease-out;
+            z-index: 500;
+        }
+
+        #achievementNotification {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: all 0.3s ease;
+        }
+
+        #achievementNotification.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #dailyRewardPopup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            pointer-events: auto;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.3);
+            transition: all 0.4s ease;
+        }
+
+        #dailyRewardPopup.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #statsPanel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #8e44ad;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        #soundToggle {
+            position: absolute;
+            top: 40px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8e44ad;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        #soundToggle:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+        }
+
+        .cooldown-timer {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        /* SHOP & LEADERBOARD SYSTEM STYLES */
+        #menuToggle {
+            position: absolute;
+            bottom: 20px;
+            right: 90px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: 3px solid #fff;
+            border-radius: 50%;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            pointer-events: auto;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #menuToggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        #shopMenu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px 20px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+            z-index: 2000;
+            pointer-events: auto;
+            overflow: hidden;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        #shopMenu.show {
+            transform: translateY(0);
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        }
+
+        .menu-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .menu-tab {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(102, 126, 234, 0.2);
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-tab.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        #closeMenu {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.8);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-content {
+            height: calc(100% - 80px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* SHOP STYLES */
+        .shop-category {
+            margin-bottom: 30px;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .shop-item {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shop-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: #667eea;
+        }
+
+        .shop-item.owned {
+            background: linear-gradient(45deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.2));
+            border-color: #10b981;
+        }
+
+        .shop-item.equipped {
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 127, 0.2));
+            border-color: #ef4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .item-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .item-price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .item-rarity {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .rarity-common { background: #6b7280; color: white; }
+        .rarity-rare { background: #3b82f6; color: white; }
+        .rarity-epic { background: #8b5cf6; color: white; }
+        .rarity-legendary { background: #f59e0b; color: white; }
+
+        .owned-badge {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: #10b981;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .equipped-badge {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ef4444;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        /* LEADERBOARD STYLES */
+        .leaderboard-categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .leaderboard-tab {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(102, 126, 234, 0.2);
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .leaderboard-tab.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .leaderboard-list {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .leaderboard-entry {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .leaderboard-entry:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .leaderboard-entry:last-child {
+            border-bottom: none;
+        }
+
+        .rank {
+            width: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .rank-crown {
+            font-size: 20px;
+        }
+
+        .player-info {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .player-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .player-score {
+            color: #667eea;
+            font-size: 12px;
+        }
+
+        .player-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+        }
+
+        /* INVENTORY STYLES */
+        .inventory-section {
+            margin-bottom: 30px;
+        }
+
+        .equipped-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .equipped-slot {
+            background: rgba(102, 126, 234, 0.1);
+            border: 2px dashed rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .equipped-slot.filled {
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 127, 0.2));
+            border-color: #ef4444;
+            border-style: solid;
+        }
+
+        .slot-label {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .slot-item {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .slot-name {
+            font-size: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* ANIMATIONS */
+        @keyframes purchaseSuccess {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); background: #10b981; }
+            100% { transform: scale(1); }
+        }
+
+        .purchase-success {
+            animation: purchaseSuccess 0.6s ease;
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            .shop-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .menu-content {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -228,8 +849,148 @@
             <div id="tokenCounter">🪙 0 $PIGMOON</div>
             <div id="comboCounter">COMBO x1</div>
             <div id="levelIndicator">Level 1</div>
-            <button id="powerUpButton">⚡</button>
+            
+            <!-- Power-up buttons -->
+            <button id="powerUpButton" class="powerUpButton">⚡</button>
+            <button id="lightningStorm" class="powerUpButton">🌩️</button>
+            <button id="rainbowMode" class="powerUpButton">🌈</button>
+            <button id="megaBubble" class="powerUpButton">💥</button>
+            <button id="sailorSpecial" class="powerUpButton">⭐</button>
+            
+            <!-- Cooldown timers for power-ups -->
+            <div id="lightningStormTimer" class="cooldown-timer" style="display: none;">15s</div>
+            <div id="rainbowModeTimer" class="cooldown-timer" style="display: none;">8s</div>
+            <div id="megaBubbleTimer" class="cooldown-timer" style="display: none;">10s</div>
+            <div id="sailorSpecialTimer" class="cooldown-timer" style="display: none;">3s</div>
+            
+            <!-- Power-up costs -->
+            <div id="powerUpCost" style="bottom: 115px; right: 20px;">10 🪙</div>
+            <div id="lightningCost" class="cooldown-timer" style="bottom: 55px; right: 20px;">25 🪙</div>
+            <div id="rainbowCost" class="cooldown-timer" style="bottom: 115px; left: 20px;">50 🪙</div>
+            <div id="megaCost" class="cooldown-timer" style="bottom: 55px; left: 20px;">30 🪙</div>
+            <div id="sailorCost" class="cooldown-timer" style="bottom: -5px; left: 50%; transform: translateX(-50%);">100 🪙</div>
+            
             <div id="sailorPig">🐷‍⚓</div>
+            
+            <!-- Sound toggle button -->
+            <button id="soundToggle">🔊</button>
+            
+            <!-- Menu toggle button -->
+            <button id="menuToggle">🛍️</button>
+            
+            <!-- Stats panel -->
+            <div id="statsPanel">
+                <div>Total Taps: <span id="totalTaps">0</span></div>
+                <div>Highest Combo: <span id="highestCombo">0</span></div>
+                <div>Daily Streak: <span id="dailyStreak">0</span></div>
+            </div>
+            
+            <!-- Achievement notification -->
+            <div id="achievementNotification">
+                <h3>🏆 ACHIEVEMENT UNLOCKED!</h3>
+                <p id="achievementText">Welcome Sailor!</p>
+            </div>
+            
+            <!-- Daily reward popup -->
+            <div id="dailyRewardPopup">
+                <h2>🎁 Daily Reward!</h2>
+                <p id="dailyRewardText">Welcome back, Sailor!</p>
+                <button id="claimRewardBtn" onclick="game.claimDailyReward()" style="margin-top: 15px; padding: 10px 20px; border: none; border-radius: 10px; background: #fff; color: #8e44ad; font-weight: bold; cursor: pointer;">Claim Reward!</button>
+            </div>
+        </div>
+
+        <!-- Shop & Leaderboard Menu -->
+        <div id="shopMenu">
+            <div class="menu-header">
+                <div class="menu-tabs">
+                    <button class="menu-tab active" data-tab="shop">Shop</button>
+                    <button class="menu-tab" data-tab="leaderboard">Leaderboard</button>
+                    <button class="menu-tab" data-tab="inventory">Inventory</button>
+                </div>
+                <button id="closeMenu">✕</button>
+            </div>
+            
+            <div class="menu-content">
+                <!-- SHOP TAB -->
+                <div id="shopTab" class="tab-panel active">
+                    <!-- Pig Costumes -->
+                    <div class="shop-category">
+                        <h3 class="category-title">🐷 Pig Costumes</h3>
+                        <div class="shop-grid" id="costumeGrid">
+                            <!-- Items populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Bubble Themes -->
+                    <div class="shop-category">
+                        <h3 class="category-title">💫 Bubble Themes</h3>
+                        <div class="shop-grid" id="bubbleThemeGrid">
+                            <!-- Items populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Backgrounds -->
+                    <div class="shop-category">
+                        <h3 class="category-title">🌟 Backgrounds</h3>
+                        <div class="shop-grid" id="backgroundGrid">
+                            <!-- Items populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Power-up Upgrades -->
+                    <div class="shop-category">
+                        <h3 class="category-title">⚡ Power-up Upgrades</h3>
+                        <div class="shop-grid" id="upgradeGrid">
+                            <!-- Items populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEADERBOARD TAB -->
+                <div id="leaderboardTab" class="tab-panel">
+                    <div class="leaderboard-categories">
+                        <button class="leaderboard-tab active" data-category="highScore">High Score</button>
+                        <button class="leaderboard-tab" data-category="longestCombo">Longest Combo</button>
+                        <button class="leaderboard-tab" data-category="mostTokens">Most Tokens</button>
+                        <button class="leaderboard-tab" data-category="dailyChampions">Daily Champions</button>
+                    </div>
+                    
+                    <div class="leaderboard-list" id="leaderboardList">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- INVENTORY TAB -->
+                <div id="inventoryTab" class="tab-panel">
+                    <div class="inventory-section">
+                        <h3 class="category-title">🎯 Currently Equipped</h3>
+                        <div class="equipped-items">
+                            <div class="equipped-slot" id="equippedCostume">
+                                <div class="slot-label">Costume</div>
+                                <div class="slot-item">🐷</div>
+                                <div class="slot-name">Default Pig</div>
+                            </div>
+                            <div class="equipped-slot" id="equippedBubbleTheme">
+                                <div class="slot-label">Bubble Theme</div>
+                                <div class="slot-item">💧</div>
+                                <div class="slot-name">Classic Bubbles</div>
+                            </div>
+                            <div class="equipped-slot" id="equippedBackground">
+                                <div class="slot-label">Background</div>
+                                <div class="slot-item">🌈</div>
+                                <div class="slot-name">Rainbow Gradient</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inventory-section">
+                        <h3 class="category-title">📈 Upgrade Levels</h3>
+                        <div class="shop-grid" id="upgradeStatus">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -243,12 +1004,32 @@
                     comboCounter: document.getElementById('comboCounter'),
                     levelIndicator: document.getElementById('levelIndicator'),
                     powerUpButton: document.getElementById('powerUpButton'),
-                    sailorPig: document.getElementById('sailorPig')
+                    lightningStorm: document.getElementById('lightningStorm'),
+                    rainbowMode: document.getElementById('rainbowMode'),
+                    megaBubble: document.getElementById('megaBubble'),
+                    sailorSpecial: document.getElementById('sailorSpecial'),
+                    sailorPig: document.getElementById('sailorPig'),
+                    soundToggle: document.getElementById('soundToggle'),
+                    statsPanel: document.getElementById('statsPanel'),
+                    achievementNotification: document.getElementById('achievementNotification'),
+                    dailyRewardPopup: document.getElementById('dailyRewardPopup'),
+                    menuToggle: document.getElementById('menuToggle'),
+                    shopMenu: document.getElementById('shopMenu'),
+                    closeMenu: document.getElementById('closeMenu')
                 };
 
+                // Initialize audio context for sound effects
+                this.audioContext = null;
+                this.soundEnabled = true;
+                this.initializeAudio();
+
                 this.setupCanvas();
+                this.initializeShopData();
                 this.initializeGame();
                 this.setupEventListeners();
+                this.setupShopEventListeners();
+                this.checkDailyReward();
+                this.initializeShop();
                 this.gameLoop();
             }
 
@@ -260,6 +1041,114 @@
                 
                 this.canvasWidth = rect.width;
                 this.canvasHeight = rect.height;
+            }
+
+            initializeShopData() {
+                // Shop Items Data
+                this.shopData = {
+                    costumes: [
+                        { id: 'royal_crown', name: 'Royal Crown Pig', icon: '👑🐷', price: 250, rarity: 'legendary', effect: 'sparkle' },
+                        { id: 'shadow_sailor', name: 'Shadow Sailor Pig', icon: '🥷🐷', price: 180, rarity: 'epic', effect: 'smoke' },
+                        { id: 'celestial_pig', name: 'Celestial Pig', icon: '😇🐷', price: 350, rarity: 'legendary', effect: 'divine_glow' },
+                        { id: 'pirate_pig', name: 'Pirate Pig', icon: '🏴‍☠️🐷', price: 200, rarity: 'rare', effect: 'none' },
+                        { id: 'wizard_pig', name: 'Wizard Pig', icon: '🧙🐷', price: 300, rarity: 'epic', effect: 'magic_staff' }
+                    ],
+                    bubbleThemes: [
+                        { id: 'treasure_vault', name: 'Treasure Vault', icon: '💰', price: 300, rarity: 'epic', effect: 'coin_bubbles' },
+                        { id: 'mystic_crystals', name: 'Mystic Crystals', icon: '💎', price: 450, rarity: 'legendary', effect: 'prismatic' },
+                        { id: 'hearts_stars', name: 'Hearts & Stars', icon: '💖⭐', price: 250, rarity: 'rare', effect: 'romantic' },
+                        { id: 'lightning_orbs', name: 'Lightning Orbs', icon: '⚡💙', price: 400, rarity: 'epic', effect: 'electric' },
+                        { id: 'galaxy_bubbles', name: 'Galaxy Bubbles', icon: '🌌', price: 500, rarity: 'legendary', effect: 'nebula' }
+                    ],
+                    backgrounds: [
+                        { id: 'enchanted_grove', name: 'Enchanted Grove', icon: '🌳🍃', price: 400, rarity: 'epic', effect: 'falling_leaves' },
+                        { id: 'underwater_palace', name: 'Underwater Palace', icon: '🏰🐠', price: 600, rarity: 'legendary', effect: 'coral_fish' },
+                        { id: 'space_station', name: 'Space Station', icon: '🚀🌟', price: 800, rarity: 'legendary', effect: 'stars_planets' },
+                        { id: 'cherry_blossom', name: 'Cherry Blossom Garden', icon: '🌸🌺', price: 350, rarity: 'epic', effect: 'petals' }
+                    ],
+                    upgrades: [
+                        { id: 'extended_magic_1', name: 'Extended Magic I', icon: '⏰⚡', price: 500, rarity: 'rare', effect: '+2s_powerups', level: 1, maxLevel: 3 },
+                        { id: 'reduced_costs_1', name: 'Reduced Costs I', icon: '💰⬇️', price: 750, rarity: 'epic', effect: '-5_token_costs', level: 1, maxLevel: 5 },
+                        { id: 'auto_tapper', name: 'Auto-Tapper', icon: '🤖👆', price: 1000, rarity: 'legendary', effect: 'auto_tap_10s', level: 1, maxLevel: 1 },
+                        { id: 'bubble_magnet', name: 'Bubble Magnet', icon: '🧲💫', price: 1200, rarity: 'legendary', effect: 'attract_center', level: 1, maxLevel: 1 }
+                    ]
+                };
+
+                // Player inventory and equipped items
+                this.inventory = this.loadInventory();
+                this.equipped = this.loadEquipped();
+
+                // Leaderboard data (simulated)
+                this.leaderboardData = this.generateLeaderboardData();
+            }
+
+            loadInventory() {
+                const saved = localStorage.getItem('pigmoonInventory');
+                return saved ? JSON.parse(saved) : {
+                    costumes: ['default'],
+                    bubbleThemes: ['classic'],
+                    backgrounds: ['rainbow_gradient'],
+                    upgrades: {}
+                };
+            }
+
+            saveInventory() {
+                localStorage.setItem('pigmoonInventory', JSON.stringify(this.inventory));
+            }
+
+            loadEquipped() {
+                const saved = localStorage.getItem('pigmoonEquipped');
+                return saved ? JSON.parse(saved) : {
+                    costume: 'default',
+                    bubbleTheme: 'classic',
+                    background: 'rainbow_gradient'
+                };
+            }
+
+            saveEquipped() {
+                localStorage.setItem('pigmoonEquipped', JSON.stringify(this.equipped));
+            }
+
+            generateLeaderboardData() {
+                const playerNames = [
+                    'SailorMoonFan', 'BubbleMaster', 'TokenKing', 'ComboQueen', 'PiggyPro',
+                    'MagicTapper', 'RainbowWarrior', 'BubbleNinja', 'StarSailor', 'CrystalHunter',
+                    'MoonPrincess', 'BubbleWizard', 'TokenCollector', 'ComboChamp', 'PigEmperor'
+                ];
+                const avatars = ['🐷', '🌙', '⭐', '💎', '👑', '🌈', '⚡', '💫', '🎯', '🏆'];
+
+                return {
+                    highScore: this.generateLeaderboard(playerNames, avatars, 'score', 500, 5000),
+                    longestCombo: this.generateLeaderboard(playerNames, avatars, 'combo', 10, 50),
+                    mostTokens: this.generateLeaderboard(playerNames, avatars, 'tokens', 100, 2000),
+                    dailyChampions: this.generateLeaderboard(playerNames, avatars, 'daily', 50, 500)
+                };
+            }
+
+            generateLeaderboard(names, avatars, type, min, max) {
+                const leaderboard = [];
+                const shuffledNames = [...names].sort(() => Math.random() - 0.5);
+                
+                for (let i = 0; i < 10; i++) {
+                    const value = Math.floor(Math.random() * (max - min)) + min;
+                    leaderboard.push({
+                        rank: i + 1,
+                        name: shuffledNames[i],
+                        avatar: avatars[i % avatars.length],
+                        value: value,
+                        isPlayer: i === 5 // Player is always 6th place for now
+                    });
+                }
+
+                // Sort by value descending
+                leaderboard.sort((a, b) => b.value - a.value);
+                
+                // Update ranks after sorting
+                leaderboard.forEach((entry, index) => {
+                    entry.rank = index + 1;
+                });
+
+                return leaderboard;
             }
 
             initializeGame() {
@@ -274,7 +1163,15 @@
                     maxPowerUpTime: 300, // 5 seconds at 60fps
                     bubbleSpawnTimer: 0,
                     bubbleSpawnRate: 90, // 1.5 seconds at 60fps
-                    score: 0
+                    score: 0,
+                    // New power-up states
+                    lightningStormCooldown: 0,
+                    rainbowModeActive: false,
+                    rainbowModeTimer: 0,
+                    megaBubbleActive: false,
+                    megaBubbleTimer: 0,
+                    sailorSpecialActive: false,
+                    sailorSpecialTimer: 0
                 };
 
                 this.bubbles = [];
@@ -282,32 +1179,267 @@
                 this.floatingTexts = [];
                 this.maxBubbles = 12;
 
+                // Stats tracking
+                this.stats = this.loadStats();
+                this.achievements = this.loadAchievements();
+
+                // Power-up cooldowns (in frames at 60fps)
+                this.powerUpCooldowns = {
+                    lightningStorm: 900, // 15 seconds
+                    rainbowMode: 0,      // No cooldown, duration based
+                    megaBubble: 600,     // 10 seconds  
+                    sailorSpecial: 180   // 3 seconds
+                };
+
+                // Ensure canvas dimensions are available for floating text positioning
+                if (!this.canvasWidth || !this.canvasHeight) {
+                    const rect = this.canvas.getBoundingClientRect();
+                    this.canvasWidth = rect.width;
+                    this.canvasHeight = rect.height;
+                }
+
                 this.updateUI();
+                this.updateAutoTapper();
+                this.applyVisualEffects();
+                console.log('Game initialized with', this.gameState.tokens, 'tokens');
             }
 
             loadTokens() {
                 const saved = localStorage.getItem('pigmoonTokens');
-                return saved ? parseInt(saved) : 0;
+                return saved ? parseInt(saved) : 500; // Start with 500 tokens for testing
             }
 
             saveTokens() {
                 localStorage.setItem('pigmoonTokens', this.gameState.tokens.toString());
             }
 
+            loadStats() {
+                const saved = localStorage.getItem('pigmoonStats');
+                return saved ? JSON.parse(saved) : {
+                    totalTaps: 0,
+                    highestCombo: 0,
+                    dailyStreak: 0,
+                    lastPlayDate: null,
+                    powerUpsUsed: 0
+                };
+            }
+
+            saveStats() {
+                localStorage.setItem('pigmoonStats', JSON.stringify(this.stats));
+            }
+
+            loadAchievements() {
+                const saved = localStorage.getItem('pigmoonAchievements');
+                return saved ? JSON.parse(saved) : {
+                    firstTap: false,
+                    speedDemon: false,
+                    tokenCollector: false,
+                    powerUser: false,
+                    comboKing: false,
+                    levelUp: false,
+                    richPig: false
+                };
+            }
+
+            saveAchievements() {
+                localStorage.setItem('pigmoonAchievements', JSON.stringify(this.achievements));
+            }
+
+            initializeAudio() {
+                try {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    console.log('Audio not supported');
+                    this.soundEnabled = false;
+                }
+            }
+
+            playSound(frequency, duration = 0.1, type = 'sine') {
+                if (!this.soundEnabled || !this.audioContext) return;
+
+                try {
+                    const oscillator = this.audioContext.createOscillator();
+                    const gainNode = this.audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(this.audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+                    oscillator.type = type;
+                    
+                    gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
+                    
+                    oscillator.start(this.audioContext.currentTime);
+                    oscillator.stop(this.audioContext.currentTime + duration);
+                } catch (e) {
+                    console.log('Sound playback failed');
+                }
+            }
+
+            vibrate(pattern = [50]) {
+                if (navigator.vibrate) {
+                    navigator.vibrate(pattern);
+                }
+            }
+
             setupEventListeners() {
                 // Touch events for bubbles
                 this.canvas.addEventListener('touchstart', (e) => this.handleTouch(e), { passive: false });
                 this.canvas.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+                this.canvas.addEventListener('click', (e) => this.handleClick(e));
                 
-                // Power-up button
-                this.ui.powerUpButton.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    this.activatePowerUp();
+                // Power-up buttons
+                this.setupPowerUpButtonEvents();
+                this.setupNewPowerUpButtons();
+
+                // Sound toggle
+                this.ui.soundToggle.addEventListener('click', () => this.toggleSound());
+
+                // Stats panel toggle (double-tap token counter)
+                let tapCount = 0;
+                this.ui.tokenCounter.addEventListener('click', () => {
+                    tapCount++;
+                    if (tapCount === 2) {
+                        this.toggleStatsPanel();
+                        tapCount = 0;
+                    } else {
+                        setTimeout(() => tapCount = 0, 300);
+                    }
                 });
 
                 // Prevent zoom
                 document.addEventListener('gesturestart', (e) => e.preventDefault());
                 document.addEventListener('gesturechange', (e) => e.preventDefault());
+            }
+
+            setupShopEventListeners() {
+                // Menu toggle button
+                this.ui.menuToggle.addEventListener('click', () => this.toggleShopMenu());
+                
+                // Close menu button
+                this.ui.closeMenu.addEventListener('click', () => this.closeShopMenu());
+                
+                // Menu tabs
+                document.querySelectorAll('.menu-tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => this.switchTab(e.target.dataset.tab));
+                });
+                
+                // Leaderboard category tabs
+                document.querySelectorAll('.leaderboard-tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => this.switchLeaderboardCategory(e.target.dataset.category));
+                });
+                
+                // Close menu when clicking outside
+                this.ui.shopMenu.addEventListener('click', (e) => {
+                    if (e.target === this.ui.shopMenu) {
+                        this.closeShopMenu();
+                    }
+                });
+            }
+
+            setupNewPowerUpButtons() {
+                // Lightning Storm
+                this.setupButtonEvents(this.ui.lightningStorm, () => this.activateLightningStorm());
+                // Rainbow Mode
+                this.setupButtonEvents(this.ui.rainbowMode, () => this.activateRainbowMode());
+                // Mega Bubble
+                this.setupButtonEvents(this.ui.megaBubble, () => this.activateMegaBubble());
+                // Sailor Special
+                this.setupButtonEvents(this.ui.sailorSpecial, () => this.activateSailorSpecial());
+            }
+
+            setupButtonEvents(button, callback) {
+                let isPressed = false;
+                
+                button.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!isPressed) {
+                        isPressed = true;
+                        button.classList.add('pressed');
+                        callback();
+                    }
+                }, { passive: false });
+                
+                button.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    isPressed = false;
+                    button.classList.remove('pressed');
+                }, { passive: false });
+                
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!isPressed) {
+                        callback();
+                    }
+                });
+            }
+
+            setupPowerUpButtonEvents() {
+                let isPressed = false;
+                
+                // Touch events (mobile)
+                this.ui.powerUpButton.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!isPressed) {
+                        isPressed = true;
+                        this.ui.powerUpButton.classList.add('pressed');
+                        this.handlePowerUpPress();
+                    }
+                }, { passive: false });
+                
+                this.ui.powerUpButton.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    isPressed = false;
+                    this.ui.powerUpButton.classList.remove('pressed');
+                }, { passive: false });
+                
+                this.ui.powerUpButton.addEventListener('touchcancel', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    isPressed = false;
+                    this.ui.powerUpButton.classList.remove('pressed');
+                }, { passive: false });
+                
+                // Mouse events (desktop)
+                this.ui.powerUpButton.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!isPressed) {
+                        isPressed = true;
+                        this.ui.powerUpButton.classList.add('pressed');
+                    }
+                });
+                
+                this.ui.powerUpButton.addEventListener('mouseup', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (isPressed) {
+                        isPressed = false;
+                        this.ui.powerUpButton.classList.remove('pressed');
+                        this.handlePowerUpPress();
+                    }
+                });
+                
+                this.ui.powerUpButton.addEventListener('mouseleave', (e) => {
+                    isPressed = false;
+                    this.ui.powerUpButton.classList.remove('pressed');
+                });
+                
+                // Click event as fallback (but prevent double activation)
+                this.ui.powerUpButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Only handle click if no other events fired
+                    if (!isPressed) {
+                        this.handlePowerUpPress();
+                    }
+                });
             }
 
             handleTouch(event) {
@@ -323,6 +1455,14 @@
 
                     this.checkBubbleHit(x, y);
                 }
+            }
+
+            handleClick(event) {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                
+                this.checkBubbleHit(x, y);
             }
 
             checkBubbleHit(x, y) {
@@ -344,9 +1484,16 @@
                 this.bubbles.splice(index, 1);
 
                 // Calculate points
-                let points = 1;
+                let points = bubble.megaBubble ? 10 : 1;
+                
                 if (this.gameState.powerUpActive) {
                     points *= 2;
+                }
+                if (this.gameState.rainbowModeActive) {
+                    points *= 3;
+                }
+                if (this.gameState.sailorSpecialActive) {
+                    points *= 10;
                 }
                 if (this.gameState.combo > 1) {
                     points *= Math.min(this.gameState.combo, 5);
@@ -358,20 +1505,36 @@
                 this.gameState.comboTimer = this.gameState.maxComboTime;
                 this.gameState.score += points;
 
+                // Update stats
+                this.stats.totalTaps++;
+                if (this.gameState.combo > this.stats.highestCombo) {
+                    this.stats.highestCombo = this.gameState.combo;
+                }
+
+                // Sound effects and haptics
+                const pitch = 200 + (this.gameState.combo * 50);
+                this.playSound(pitch, 0.1, 'sine');
+                this.vibrate([30]);
+
                 // Create pop effects
-                this.createParticles(bubble.x, bubble.y);
-                this.createFloatingText(`+${points} $PIGMOON`, bubble.x, bubble.y);
+                this.createParticles(bubble.x, bubble.y, bubble.megaBubble);
+                const text = bubble.megaBubble ? `+${points} MEGA!` : `+${points} $PIGMOON`;
+                this.createFloatingText(text, bubble.x, bubble.y);
+
+                // Check achievements
+                this.checkAchievements();
 
                 // Update UI
                 this.updateUI();
                 this.saveTokens();
+                this.saveStats();
 
                 // Check level progression
                 this.checkLevelUp();
             }
 
-            createParticles(x, y) {
-                const particleCount = 8;
+            createParticles(x, y, isMegaBubble = false) {
+                const particleCount = isMegaBubble ? 16 : 8;
                 for (let i = 0; i < particleCount; i++) {
                     const angle = (Math.PI * 2 * i) / particleCount;
                     const speed = 2 + Math.random() * 3;
@@ -381,9 +1544,160 @@
                         y: y,
                         vx: Math.cos(angle) * speed,
                         vy: Math.sin(angle) * speed,
-                        life: 30,
-                        maxLife: 30
+                        life: isMegaBubble ? 60 : 30,
+                        maxLife: isMegaBubble ? 60 : 30,
+                        isMega: isMegaBubble
                     });
+                }
+            }
+
+            // NEW POWER-UP METHODS
+            activateLightningStorm() {
+                if (this.gameState.lightningStormCooldown > 0) {
+                    this.createFloatingText('Cooldown Active!', this.canvasWidth - 70, this.canvasHeight - 100);
+                    return;
+                }
+
+                if (this.gameState.tokens >= this.getPowerUpCost(25)) {
+                    this.gameState.tokens -= this.getPowerUpCost(25);
+                    this.gameState.lightningStormCooldown = this.powerUpCooldowns.lightningStorm;
+                    
+                    // Create lightning effect
+                    const lightning = document.createElement('div');
+                    lightning.className = 'lightningEffect';
+                    document.getElementById('gameContainer').appendChild(lightning);
+                    
+                    // Pop ALL bubbles
+                    const bubblesPopped = this.bubbles.length;
+                    for (let i = this.bubbles.length - 1; i >= 0; i--) {
+                        const bubble = this.bubbles[i];
+                        this.createParticles(bubble.x, bubble.y);
+                        this.gameState.tokens += bubble.megaBubble ? 10 : 1;
+                    }
+                    this.bubbles = [];
+                    
+                    this.playSound(800, 0.3, 'sawtooth');
+                    this.vibrate([100, 50, 100]);
+                    this.createFloatingText(`⚡ ${bubblesPopped} BUBBLES DESTROYED! ⚡`, this.canvasWidth / 2, this.canvasHeight / 2);
+                    
+                    setTimeout(() => {
+                        if (lightning.parentNode) {
+                            lightning.parentNode.removeChild(lightning);
+                        }
+                    }, 300);
+                    
+                    this.stats.powerUpsUsed++;
+                    this.updateUI();
+                    this.saveTokens();
+                } else {
+                    this.createFloatingText(`Need ${this.getPowerUpCost(25)} tokens!`, this.canvasWidth - 70, this.canvasHeight - 100);
+                    this.ui.lightningStorm.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => this.ui.lightningStorm.style.animation = '', 500);
+                }
+            }
+
+            activateRainbowMode() {
+                if (this.gameState.rainbowModeActive) {
+                    this.createFloatingText('Already Active!', this.canvasWidth / 2, this.canvasHeight / 2);
+                    return;
+                }
+
+                if (this.gameState.tokens >= this.getPowerUpCost(50)) {
+                    this.gameState.tokens -= this.getPowerUpCost(50);
+                    this.gameState.rainbowModeActive = true;
+                    this.gameState.rainbowModeTimer = this.getPowerUpDuration(480); // 8 seconds + upgrades
+                    
+                    document.body.classList.add('rainbow-mode');
+                    this.playSound(440, 0.5, 'triangle');
+                    this.vibrate([200]);
+                    this.createFloatingText('🌈 RAINBOW MODE! 3X MULTIPLIER! 🌈', this.canvasWidth / 2, this.canvasHeight / 2);
+                    
+                    this.stats.powerUpsUsed++;
+                    this.updateUI();
+                    this.saveTokens();
+                } else {
+                    this.createFloatingText(`Need ${this.getPowerUpCost(50)} tokens!`, this.canvasWidth / 2, this.canvasHeight / 2);
+                    this.ui.rainbowMode.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => this.ui.rainbowMode.style.animation = '', 500);
+                }
+            }
+
+            activateMegaBubble() {
+                if (this.gameState.megaBubbleActive) {
+                    this.createFloatingText('Already Active!', this.canvasWidth / 2, this.canvasHeight / 2);
+                    return;
+                }
+
+                if (this.gameState.tokens >= this.getPowerUpCost(30)) {
+                    this.gameState.tokens -= this.getPowerUpCost(30);
+                    this.gameState.megaBubbleActive = true;
+                    this.gameState.megaBubbleTimer = this.getPowerUpDuration(600); // 10 seconds + upgrades
+                    
+                    // Spawn 5 mega bubbles
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => {
+                            const radius = 45;
+                            const x = radius + Math.random() * (this.canvasWidth - radius * 2);
+                            const y = radius + Math.random() * (this.canvasHeight - radius * 2 - 200);
+
+                            this.bubbles.push({
+                                x: x,
+                                y: y,
+                                radius: radius,
+                                life: 600, // 10 seconds
+                                maxLife: 600,
+                                alpha: 1,
+                                bob: Math.random() * Math.PI * 2,
+                                megaBubble: true
+                            });
+                        }, i * 200);
+                    }
+                    
+                    this.playSound(600, 0.4, 'square');
+                    this.vibrate([150]);
+                    this.createFloatingText('💥 MEGA BUBBLES INCOMING! 💥', this.canvasWidth / 2, this.canvasHeight / 2);
+                    
+                    this.stats.powerUpsUsed++;
+                    this.updateUI();
+                    this.saveTokens();
+                } else {
+                    this.createFloatingText(`Need ${this.getPowerUpCost(30)} tokens!`, this.canvasWidth / 2, this.canvasHeight / 2);
+                    this.ui.megaBubble.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => this.ui.megaBubble.style.animation = '', 500);
+                }
+            }
+
+            activateSailorSpecial() {
+                if (this.gameState.sailorSpecialActive) {
+                    this.createFloatingText('Already Active!', this.canvasWidth / 2, this.canvasHeight / 2);
+                    return;
+                }
+
+                if (this.gameState.tokens >= this.getPowerUpCost(100)) {
+                    this.gameState.tokens -= this.getPowerUpCost(100);
+                    this.gameState.sailorSpecialActive = true;
+                    this.gameState.sailorSpecialTimer = this.getPowerUpDuration(180); // 3 seconds + upgrades
+                    
+                    // Magical girl transformation animation
+                    this.ui.sailorPig.style.animation = 'sailorTransform 2s ease-in-out';
+                    this.ui.sailorPig.style.filter = 'drop-shadow(0 0 20px #ff69b4)';
+                    
+                    this.playSound(1000, 1, 'triangle');
+                    this.vibrate([300, 100, 300]);
+                    this.createFloatingText('⭐ SAILOR MOON SPECIAL! 10X MULTIPLIER! ⭐', this.canvasWidth / 2, this.canvasHeight / 2);
+                    
+                    setTimeout(() => {
+                        this.ui.sailorPig.style.animation = 'pigBob 2s ease-in-out infinite';
+                        this.ui.sailorPig.style.filter = '';
+                    }, 2000);
+                    
+                    this.stats.powerUpsUsed++;
+                    this.updateUI();
+                    this.saveTokens();
+                } else {
+                    this.createFloatingText(`Need ${this.getPowerUpCost(100)} tokens!`, this.canvasWidth / 2, this.canvasHeight / 2);
+                    this.ui.sailorSpecial.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => this.ui.sailorSpecial.style.animation = '', 500);
                 }
             }
 
@@ -403,14 +1717,583 @@
                 }, 1000);
             }
 
-            activatePowerUp() {
-                if (this.gameState.tokens >= 10) {
-                    this.gameState.tokens -= 10;
+            // SHOP & LEADERBOARD SYSTEM
+            toggleShopMenu() {
+                this.ui.shopMenu.classList.toggle('show');
+                if (this.ui.shopMenu.classList.contains('show')) {
+                    this.playSound(440, 0.2, 'triangle');
+                }
+            }
+
+            closeShopMenu() {
+                this.ui.shopMenu.classList.remove('show');
+                this.playSound(330, 0.2, 'triangle');
+            }
+
+            switchTab(tabName) {
+                // Remove active class from all tabs and panels
+                document.querySelectorAll('.menu-tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+                
+                // Add active class to selected tab and panel
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+                document.getElementById(`${tabName}Tab`).classList.add('active');
+                
+                // Update content based on tab
+                if (tabName === 'leaderboard') {
+                    this.updateLeaderboard('highScore');
+                } else if (tabName === 'inventory') {
+                    this.updateInventoryDisplay();
+                }
+                
+                this.playSound(550, 0.1, 'sine');
+            }
+
+            switchLeaderboardCategory(category) {
+                // Remove active class from all leaderboard tabs
+                document.querySelectorAll('.leaderboard-tab').forEach(tab => tab.classList.remove('active'));
+                
+                // Add active class to selected tab
+                document.querySelector(`[data-category="${category}"]`).classList.add('active');
+                
+                // Update leaderboard display
+                this.updateLeaderboard(category);
+                
+                this.playSound(600, 0.1, 'sine');
+            }
+
+            initializeShop() {
+                this.populateShopGrids();
+                this.updateLeaderboard('highScore');
+                this.updateInventoryDisplay();
+            }
+
+            populateShopGrids() {
+                // Populate costume grid
+                this.populateShopGrid('costumeGrid', this.shopData.costumes, 'costumes');
+                
+                // Populate bubble theme grid
+                this.populateShopGrid('bubbleThemeGrid', this.shopData.bubbleThemes, 'bubbleThemes');
+                
+                // Populate background grid
+                this.populateShopGrid('backgroundGrid', this.shopData.backgrounds, 'backgrounds');
+                
+                // Populate upgrade grid
+                this.populateShopGrid('upgradeGrid', this.shopData.upgrades, 'upgrades');
+            }
+
+            populateShopGrid(gridId, items, category) {
+                const grid = document.getElementById(gridId);
+                grid.innerHTML = '';
+                
+                items.forEach(item => {
+                    const itemElement = this.createShopItem(item, category);
+                    grid.appendChild(itemElement);
+                });
+            }
+
+            createShopItem(item, category) {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'shop-item';
+                
+                const isOwned = this.isItemOwned(item.id, category);
+                const isEquipped = this.isItemEquipped(item.id, category);
+                
+                if (isOwned) itemDiv.classList.add('owned');
+                if (isEquipped) itemDiv.classList.add('equipped');
+                
+                const price = this.getItemPrice(item, category);
+                const canAfford = this.gameState.tokens >= price;
+                
+                itemDiv.innerHTML = `
+                    <div class="item-rarity rarity-${item.rarity}"></div>
+                    ${isOwned ? '<div class="owned-badge">OWNED</div>' : ''}
+                    ${isEquipped ? '<div class="equipped-badge">EQUIPPED</div>' : ''}
+                    <div class="item-icon">${item.icon}</div>
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-price">${isOwned && category !== 'upgrades' ? 'OWNED' : (isOwned && category === 'upgrades' && price === 0 ? 'MAX' : `${price} 🪙`)}</div>
+                `;
+                
+                itemDiv.addEventListener('click', () => this.handleShopItemClick(item, category));
+                
+                return itemDiv;
+            }
+
+            isItemOwned(itemId, category) {
+                if (category === 'upgrades') {
+                    return this.inventory.upgrades[itemId] && this.inventory.upgrades[itemId].level > 0;
+                }
+                return this.inventory[category].includes(itemId);
+            }
+
+            isItemEquipped(itemId, category) {
+                if (category === 'upgrades') return false;
+                
+                const categoryMap = {
+                    costumes: 'costume',
+                    bubbleThemes: 'bubbleTheme',
+                    backgrounds: 'background'
+                };
+                
+                return this.equipped[categoryMap[category]] === itemId;
+            }
+
+            getItemPrice(item, category) {
+                if (category === 'upgrades' && this.inventory.upgrades[item.id]) {
+                    const currentLevel = this.inventory.upgrades[item.id].level;
+                    if (currentLevel >= item.maxLevel) return 0;
+                    return Math.floor(item.price * Math.pow(1.5, currentLevel));
+                }
+                return item.price;
+            }
+
+            handleShopItemClick(item, category) {
+                const price = this.getItemPrice(item, category);
+                const isOwned = this.isItemOwned(item.id, category);
+                
+                if (category === 'upgrades') {
+                    this.handleUpgradeClick(item, price);
+                } else if (isOwned) {
+                    this.equipItem(item.id, category);
+                } else {
+                    this.purchaseItem(item, category, price);
+                }
+            }
+
+            handleUpgradeClick(item, price) {
+                const currentLevel = this.inventory.upgrades[item.id] ? this.inventory.upgrades[item.id].level : 0;
+                
+                if (currentLevel >= item.maxLevel) {
+                    this.createFloatingText('Already at max level!', this.canvasWidth / 2, this.canvasHeight / 2);
+                    return;
+                }
+                
+                if (this.gameState.tokens >= price) {
+                    this.gameState.tokens -= price;
+                    
+                    if (!this.inventory.upgrades[item.id]) {
+                        this.inventory.upgrades[item.id] = { level: 0 };
+                    }
+                    this.inventory.upgrades[item.id].level++;
+                    
+                    this.saveTokens();
+                    this.saveInventory();
+                    this.updateUI();
+                    this.populateShopGrids();
+                    this.updateAutoTapper(); // Update auto-tapper if purchased
+                    
+                    this.playSound(880, 0.5, 'triangle');
+                    this.vibrate([100, 50, 100]);
+                    this.createFloatingText(`${item.name} upgraded!`, this.canvasWidth / 2, this.canvasHeight / 2);
+                } else {
+                    this.createFloatingText(`Need ${price} tokens!`, this.canvasWidth / 2, this.canvasHeight / 2);
+                    this.playSound(200, 0.3, 'sawtooth');
+                }
+            }
+
+            purchaseItem(item, category, price) {
+                if (this.gameState.tokens >= price) {
+                    this.gameState.tokens -= price;
+                    this.inventory[category].push(item.id);
+                    
+                    this.saveTokens();
+                    this.saveInventory();
+                    this.updateUI();
+                    this.populateShopGrids();
+                    
+                    // Auto-equip if first item of this type
+                    if (this.inventory[category].length === 1) {
+                        this.equipItem(item.id, category);
+                    }
+                    
+                    this.playSound(880, 0.5, 'triangle');
+                    this.vibrate([100, 50, 100]);
+                    this.createFloatingText(`${item.name} purchased!`, this.canvasWidth / 2, this.canvasHeight / 2);
+                } else {
+                    this.createFloatingText(`Need ${price} tokens!`, this.canvasWidth / 2, this.canvasHeight / 2);
+                    this.playSound(200, 0.3, 'sawtooth');
+                }
+            }
+
+            equipItem(itemId, category) {
+                const categoryMap = {
+                    costumes: 'costume',
+                    bubbleThemes: 'bubbleTheme',
+                    backgrounds: 'background'
+                };
+                
+                this.equipped[categoryMap[category]] = itemId;
+                this.saveEquipped();
+                this.populateShopGrids();
+                this.updateInventoryDisplay();
+                this.applyVisualEffects();
+                
+                const item = this.shopData[category].find(i => i.id === itemId);
+                this.createFloatingText(`${item.name} equipped!`, this.canvasWidth / 2, this.canvasHeight / 2);
+                this.playSound(660, 0.3, 'triangle');
+            }
+
+            applyVisualEffects() {
+                // Apply costume effects
+                const costume = this.equipped.costume;
+                if (costume === 'royal_crown') {
+                    this.ui.sailorPig.style.filter = 'drop-shadow(0 0 10px gold)';
+                } else if (costume === 'celestial_pig') {
+                    this.ui.sailorPig.style.filter = 'drop-shadow(0 0 15px white)';
+                } else {
+                    this.ui.sailorPig.style.filter = '';
+                }
+                
+                // Apply background effects (would modify body background in full implementation)
+                // For now, just update the pig display
+                this.updatePigDisplay();
+            }
+
+            updatePigDisplay() {
+                const costumeMap = {
+                    default: '🐷‍⚓',
+                    royal_crown: '👑🐷',
+                    shadow_sailor: '🥷🐷',
+                    celestial_pig: '😇🐷',
+                    pirate_pig: '🏴‍☠️🐷',
+                    wizard_pig: '🧙🐷'
+                };
+                
+                this.ui.sailorPig.textContent = costumeMap[this.equipped.costume] || '🐷‍⚓';
+            }
+
+            updateLeaderboard(category) {
+                const leaderboardList = document.getElementById('leaderboardList');
+                const data = this.leaderboardData[category];
+                
+                leaderboardList.innerHTML = '';
+                
+                data.forEach(entry => {
+                    const entryDiv = document.createElement('div');
+                    entryDiv.className = 'leaderboard-entry';
+                    if (entry.isPlayer) entryDiv.style.background = 'rgba(102, 126, 234, 0.2)';
+                    
+                    const rankDisplay = entry.rank <= 3 ? 
+                        `<span class="rank-crown">${['🥇', '🥈', '🥉'][entry.rank - 1]}</span>` :
+                        entry.rank;
+                    
+                    const valueText = this.formatLeaderboardValue(category, entry.value);
+                    
+                    entryDiv.innerHTML = `
+                        <div class="rank">${rankDisplay}</div>
+                        <div class="player-info">
+                            <div class="player-name">${entry.name}${entry.isPlayer ? ' (You)' : ''}</div>
+                            <div class="player-score">${valueText}</div>
+                        </div>
+                        <div class="player-avatar">${entry.avatar}</div>
+                    `;
+                    
+                    leaderboardList.appendChild(entryDiv);
+                });
+            }
+
+            formatLeaderboardValue(category, value) {
+                switch (category) {
+                    case 'highScore':
+                        return `${value.toLocaleString()} points`;
+                    case 'longestCombo':
+                        return `${value}x combo`;
+                    case 'mostTokens':
+                        return `${value.toLocaleString()} 🪙`;
+                    case 'dailyChampions':
+                        return `${value.toLocaleString()} today`;
+                    default:
+                        return value.toString();
+                }
+            }
+
+            updateInventoryDisplay() {
+                // Update equipped slots
+                this.updateEquippedSlot('equippedCostume', 'costume', 'costumes');
+                this.updateEquippedSlot('equippedBubbleTheme', 'bubbleTheme', 'bubbleThemes');
+                this.updateEquippedSlot('equippedBackground', 'background', 'backgrounds');
+                
+                // Update upgrade status
+                this.updateUpgradeStatus();
+            }
+
+            updateEquippedSlot(slotId, equippedKey, dataKey) {
+                const slot = document.getElementById(slotId);
+                const equippedId = this.equipped[equippedKey];
+                const item = this.shopData[dataKey].find(i => i.id === equippedId);
+                
+                if (item) {
+                    slot.classList.add('filled');
+                    slot.querySelector('.slot-item').textContent = item.icon;
+                    slot.querySelector('.slot-name').textContent = item.name;
+                } else {
+                    slot.classList.remove('filled');
+                    const defaultValues = {
+                        costume: { icon: '🐷', name: 'Default Pig' },
+                        bubbleTheme: { icon: '💧', name: 'Classic Bubbles' },
+                        background: { icon: '🌈', name: 'Rainbow Gradient' }
+                    };
+                    const defaultValue = defaultValues[equippedKey];
+                    slot.querySelector('.slot-item').textContent = defaultValue.icon;
+                    slot.querySelector('.slot-name').textContent = defaultValue.name;
+                }
+            }
+
+            updateUpgradeStatus() {
+                const upgradeStatus = document.getElementById('upgradeStatus');
+                upgradeStatus.innerHTML = '';
+                
+                this.shopData.upgrades.forEach(upgrade => {
+                    const currentLevel = this.inventory.upgrades[upgrade.id] ? this.inventory.upgrades[upgrade.id].level : 0;
+                    
+                    const upgradeDiv = document.createElement('div');
+                    upgradeDiv.className = 'shop-item owned';
+                    
+                    upgradeDiv.innerHTML = `
+                        <div class="item-icon">${upgrade.icon}</div>
+                        <div class="item-name">${upgrade.name}</div>
+                        <div class="item-price">Level ${currentLevel}/${upgrade.maxLevel}</div>
+                    `;
+                    
+                    upgradeStatus.appendChild(upgradeDiv);
+                });
+            }
+
+            // UPGRADE EFFECTS SYSTEM
+            getPowerUpCost(baseCost) {
+                const reducedCosts = this.inventory.upgrades['reduced_costs_1'] ? this.inventory.upgrades['reduced_costs_1'].level : 0;
+                return Math.max(1, baseCost - (reducedCosts * 5));
+            }
+
+            getPowerUpDuration(baseDuration) {
+                const extendedMagic = this.inventory.upgrades['extended_magic_1'] ? this.inventory.upgrades['extended_magic_1'].level : 0;
+                return baseDuration + (extendedMagic * 120); // +2 seconds per level at 60fps
+            }
+
+            updateAutoTapper() {
+                if (this.inventory.upgrades['auto_tapper'] && this.inventory.upgrades['auto_tapper'].level > 0) {
+                    if (!this.autoTapperInterval) {
+                        this.autoTapperInterval = setInterval(() => {
+                            if (this.bubbles.length > 0) {
+                                const randomBubble = this.bubbles[Math.floor(Math.random() * this.bubbles.length)];
+                                const index = this.bubbles.indexOf(randomBubble);
+                                this.popBubble(randomBubble, index, randomBubble.x, randomBubble.y);
+                            }
+                        }, 1000); // 1 tap per second
+                    }
+                } else if (this.autoTapperInterval) {
+                    clearInterval(this.autoTapperInterval);
+                    this.autoTapperInterval = null;
+                }
+            }
+
+            applyBubbleMagnet() {
+                if (this.inventory.upgrades['bubble_magnet'] && this.inventory.upgrades['bubble_magnet'].level > 0) {
+                    const centerX = this.canvasWidth / 2;
+                    const centerY = this.canvasHeight / 2;
+                    
+                    this.bubbles.forEach(bubble => {
+                        const dx = centerX - bubble.x;
+                        const dy = centerY - bubble.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance > 50) { // Don't pull bubbles that are too close
+                            const magnetForce = 0.5;
+                            bubble.x += (dx / distance) * magnetForce;
+                            bubble.y += (dy / distance) * magnetForce;
+                        }
+                    });
+                }
+            }
+
+            // ACHIEVEMENTS SYSTEM
+            checkAchievements() {
+                // First Tap
+                if (!this.achievements.firstTap && this.stats.totalTaps >= 1) {
+                    this.unlockAchievement('firstTap', 'Welcome Sailor!', 'Tap your first bubble');
+                }
+
+                // Speed Demon - track rapid taps
+                if (!this.speedDemonTaps) this.speedDemonTaps = [];
+                this.speedDemonTaps.push(Date.now());
+                this.speedDemonTaps = this.speedDemonTaps.filter(time => Date.now() - time < 2000);
+                
+                if (!this.achievements.speedDemon && this.speedDemonTaps.length >= 10) {
+                    this.unlockAchievement('speedDemon', 'Rapid Fire!', '10 taps in 2 seconds');
+                }
+
+                // Token Collector
+                if (!this.achievements.tokenCollector && this.gameState.score >= 1000) {
+                    this.unlockAchievement('tokenCollector', 'Piggy Bank!', 'Earn 1000 total tokens');
+                }
+
+                // Power User
+                if (!this.achievements.powerUser && this.stats.powerUpsUsed >= 5) {
+                    this.unlockAchievement('powerUser', 'Magic Master!', 'Use 5 power-ups');
+                }
+
+                // Combo King
+                if (!this.achievements.comboKing && this.gameState.combo >= 20) {
+                    this.unlockAchievement('comboKing', 'Bubble Destroyer!', 'Get 20x combo');
+                }
+
+                // Level Up
+                if (!this.achievements.levelUp && this.gameState.level >= 10) {
+                    this.unlockAchievement('levelUp', 'Sailor Rank Up!', 'Reach level 10');
+                }
+
+                // Rich Pig
+                if (!this.achievements.richPig && this.gameState.tokens >= 500) {
+                    this.unlockAchievement('richPig', 'Token Billionaire!', 'Have 500 tokens at once');
+                }
+            }
+
+            unlockAchievement(id, title, description) {
+                this.achievements[id] = true;
+                this.saveAchievements();
+                
+                // Show achievement notification
+                const notification = this.ui.achievementNotification;
+                notification.querySelector('#achievementText').textContent = `${title} - ${description}`;
+                notification.classList.add('show');
+                
+                this.playSound(880, 0.8, 'triangle');
+                this.vibrate([200, 100, 200]);
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+
+            // DAILY REWARDS SYSTEM
+            checkDailyReward() {
+                const today = new Date().toDateString();
+                const lastPlay = this.stats.lastPlayDate;
+                
+                if (lastPlay !== today) {
+                    this.stats.lastPlayDate = today;
+                    
+                    if (lastPlay) {
+                        const lastDate = new Date(lastPlay);
+                        const todayDate = new Date(today);
+                        const diffTime = todayDate - lastDate;
+                        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                        
+                        if (diffDays === 1) {
+                            this.stats.dailyStreak++;
+                        } else if (diffDays > 1) {
+                            this.stats.dailyStreak = 1;
+                        }
+                    } else {
+                        this.stats.dailyStreak = 1;
+                    }
+                    
+                    this.showDailyReward();
+                    this.saveStats();
+                }
+            }
+
+            showDailyReward() {
+                const streak = this.stats.dailyStreak;
+                let reward = 10;
+                let message = `Day ${streak}: ${reward} tokens bonus`;
+                
+                if (streak === 2) {
+                    reward = 25;
+                    message = `Day ${streak}: ${reward} tokens bonus`;
+                } else if (streak === 3) {
+                    reward = 50;
+                    message = `Day ${streak}: ${reward} tokens + Rainbow Mode unlocked!`;
+                } else if (streak >= 7) {
+                    reward = 200;
+                    message = `Day ${streak}: ${reward} tokens + special achievement!`;
+                    this.unlockAchievement('weekStreak', 'Week Warrior!', '7-day login streak');
+                }
+                
+                this.dailyRewardAmount = reward;
+                
+                const popup = this.ui.dailyRewardPopup;
+                popup.querySelector('#dailyRewardText').textContent = message;
+                popup.classList.add('show');
+            }
+
+            claimDailyReward() {
+                this.gameState.tokens += this.dailyRewardAmount;
+                this.saveTokens();
+                this.updateUI();
+                
+                this.ui.dailyRewardPopup.classList.remove('show');
+                this.createFloatingText(`+${this.dailyRewardAmount} Daily Bonus!`, this.canvasWidth / 2, this.canvasHeight / 2);
+                
+                this.playSound(660, 0.6, 'triangle');
+            }
+
+            // UI HELPERS
+            toggleSound() {
+                this.soundEnabled = !this.soundEnabled;
+                this.ui.soundToggle.textContent = this.soundEnabled ? '🔊' : '🔇';
+                
+                if (this.soundEnabled && this.audioContext && this.audioContext.state === 'suspended') {
+                    this.audioContext.resume();
+                }
+            }
+
+            toggleStatsPanel() {
+                const panel = this.ui.statsPanel;
+                panel.style.opacity = panel.style.opacity === '1' ? '0' : '1';
+                
+                // Update stats display
+                document.getElementById('totalTaps').textContent = this.stats.totalTaps;
+                document.getElementById('highestCombo').textContent = this.stats.highestCombo;
+                document.getElementById('dailyStreak').textContent = this.stats.dailyStreak;
+            }
+
+            handlePowerUpPress() {
+                console.log('Power-up button pressed!'); // Debug log
+                
+                // Prevent activation if already active
+                if (this.gameState.powerUpActive) {
+                    console.log('Power-up already active');
+                    this.createFloatingText('Power-up already active!', this.canvasWidth - 70, this.canvasHeight - 100);
+                    return;
+                }
+
+                console.log(`Current tokens: ${this.gameState.tokens}`); // Debug log
+                
+                if (this.gameState.tokens >= this.getPowerUpCost(10)) {
+                    console.log('Activating power-up!'); // Debug log
+                    
+                    this.gameState.tokens -= this.getPowerUpCost(10);
                     this.gameState.powerUpActive = true;
-                    this.gameState.powerUpTimer = this.gameState.maxPowerUpTime;
+                    this.gameState.powerUpTimer = this.getPowerUpDuration(this.gameState.maxPowerUpTime);
                     this.ui.powerUpButton.classList.add('active');
+                    this.ui.powerUpButton.classList.remove('disabled');
+                    
+                    // Show power-up activation text
+                    this.createFloatingText('POWER UP! 2X MULTIPLIER', this.canvasWidth / 2, this.canvasHeight / 2 - 50);
+                    
+                    // Add visual feedback to sailor pig
+                    this.ui.sailorPig.style.animation = 'pigBob 0.5s ease-in-out 3';
+                    
                     this.updateUI();
                     this.saveTokens();
+                    
+                    console.log(`Tokens after power-up: ${this.gameState.tokens}`); // Debug log
+                } else {
+                    console.log('Insufficient tokens for power-up'); // Debug log
+                    
+                    // Show insufficient funds feedback
+                    this.ui.powerUpButton.classList.add('disabled');
+                    this.createFloatingText(`Need ${this.getPowerUpCost(10)} tokens!`, this.canvasWidth - 70, this.canvasHeight - 100);
+                    
+                    // Add shake animation to button
+                    this.ui.powerUpButton.style.animation = 'shake 0.5s ease-in-out';
+                    
+                    // Remove effects after animation
+                    setTimeout(() => {
+                        this.ui.powerUpButton.classList.remove('disabled');
+                        this.ui.powerUpButton.style.animation = '';
+                    }, 1000);
                 }
             }
 
@@ -433,6 +2316,9 @@
             }
 
             updateBubbles() {
+                // Apply bubble magnet effect
+                this.applyBubbleMagnet();
+                
                 for (let i = this.bubbles.length - 1; i >= 0; i--) {
                     const bubble = this.bubbles[i];
                     bubble.life--;
@@ -481,6 +2367,62 @@
                     }
                 }
 
+                // Update lightning storm cooldown
+                if (this.gameState.lightningStormCooldown > 0) {
+                    this.gameState.lightningStormCooldown--;
+                    const timer = document.getElementById('lightningStormTimer');
+                    if (this.gameState.lightningStormCooldown > 0) {
+                        timer.style.display = 'block';
+                        timer.textContent = `${Math.ceil(this.gameState.lightningStormCooldown / 60)}s`;
+                        this.ui.lightningStorm.classList.add('cooldown');
+                    } else {
+                        timer.style.display = 'none';
+                        this.ui.lightningStorm.classList.remove('cooldown');
+                    }
+                }
+
+                // Update rainbow mode timer
+                if (this.gameState.rainbowModeActive) {
+                    this.gameState.rainbowModeTimer--;
+                    const timer = document.getElementById('rainbowModeTimer');
+                    timer.style.display = 'block';
+                    timer.textContent = `${Math.ceil(this.gameState.rainbowModeTimer / 60)}s`;
+                    
+                    if (this.gameState.rainbowModeTimer <= 0) {
+                        this.gameState.rainbowModeActive = false;
+                        document.body.classList.remove('rainbow-mode');
+                        timer.style.display = 'none';
+                        this.createFloatingText('Rainbow Mode Ended!', this.canvasWidth / 2, this.canvasHeight / 2);
+                    }
+                }
+
+                // Update mega bubble timer
+                if (this.gameState.megaBubbleActive) {
+                    this.gameState.megaBubbleTimer--;
+                    const timer = document.getElementById('megaBubbleTimer');
+                    timer.style.display = 'block';
+                    timer.textContent = `${Math.ceil(this.gameState.megaBubbleTimer / 60)}s`;
+                    
+                    if (this.gameState.megaBubbleTimer <= 0) {
+                        this.gameState.megaBubbleActive = false;
+                        timer.style.display = 'none';
+                    }
+                }
+
+                // Update sailor special timer
+                if (this.gameState.sailorSpecialActive) {
+                    this.gameState.sailorSpecialTimer--;
+                    const timer = document.getElementById('sailorSpecialTimer');
+                    timer.style.display = 'block';
+                    timer.textContent = `${Math.ceil(this.gameState.sailorSpecialTimer / 60)}s`;
+                    
+                    if (this.gameState.sailorSpecialTimer <= 0) {
+                        this.gameState.sailorSpecialActive = false;
+                        timer.style.display = 'none';
+                        this.createFloatingText('Sailor Special Ended!', this.canvasWidth / 2, this.canvasHeight / 2);
+                    }
+                }
+
                 // Spawn bubbles
                 this.gameState.bubbleSpawnTimer--;
                 if (this.gameState.bubbleSpawnTimer <= 0) {
@@ -510,6 +2452,36 @@
                 }
 
                 this.ui.levelIndicator.textContent = `Level ${this.gameState.level}`;
+                
+                // Update power-up costs
+                this.updatePowerUpCosts();
+                
+                // Update power-up button state
+                const powerUpCost = this.getPowerUpCost(10);
+                if (this.gameState.tokens < powerUpCost && !this.gameState.powerUpActive) {
+                    this.ui.powerUpButton.classList.add('disabled');
+                } else if (!this.gameState.powerUpActive) {
+                    this.ui.powerUpButton.classList.remove('disabled');
+                }
+            }
+
+            updatePowerUpCosts() {
+                // Update cost displays
+                const costElements = {
+                    'powerUpCost': 10,
+                    'lightningCost': 25,
+                    'rainbowCost': 50,
+                    'megaCost': 30,
+                    'sailorCost': 100
+                };
+
+                Object.entries(costElements).forEach(([elementId, baseCost]) => {
+                    const element = document.getElementById(elementId);
+                    if (element) {
+                        const actualCost = this.getPowerUpCost(baseCost);
+                        element.textContent = `${actualCost} 🪙`;
+                    }
+                });
             }
 
             render() {
@@ -525,14 +2497,34 @@
                     const x = bubble.x;
                     const y = bubble.y + bobOffset;
 
+                    // Mega bubble special effects
+                    if (bubble.megaBubble) {
+                        // Sparkle aura
+                        const auraGradient = this.ctx.createRadialGradient(x, y, 0, x, y, bubble.radius + 15);
+                        auraGradient.addColorStop(0, 'rgba(255, 215, 0, 0.3)');
+                        auraGradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                        
+                        this.ctx.beginPath();
+                        this.ctx.arc(x, y, bubble.radius + 15, 0, Math.PI * 2);
+                        this.ctx.fillStyle = auraGradient;
+                        this.ctx.fill();
+                    }
+
                     // Bubble gradient
                     const gradient = this.ctx.createRadialGradient(
                         x - bubble.radius * 0.3, y - bubble.radius * 0.3, 0,
                         x, y, bubble.radius
                     );
-                    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
-                    gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.3)');
-                    gradient.addColorStop(1, 'rgba(255, 255, 255, 0.1)');
+                    
+                    if (bubble.megaBubble) {
+                        gradient.addColorStop(0, 'rgba(255, 215, 0, 0.9)');
+                        gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.5)');
+                        gradient.addColorStop(1, 'rgba(255, 215, 0, 0.2)');
+                    } else {
+                        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+                        gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.3)');
+                        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.1)');
+                    }
 
                     this.ctx.beginPath();
                     this.ctx.arc(x, y, bubble.radius, 0, Math.PI * 2);
@@ -540,8 +2532,8 @@
                     this.ctx.fill();
 
                     // Bubble border
-                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-                    this.ctx.lineWidth = 2;
+                    this.ctx.strokeStyle = bubble.megaBubble ? 'rgba(255, 215, 0, 0.8)' : 'rgba(255, 255, 255, 0.5)';
+                    this.ctx.lineWidth = bubble.megaBubble ? 3 : 2;
                     this.ctx.stroke();
 
                     this.ctx.restore();
@@ -551,10 +2543,25 @@
                 this.particles.forEach(particle => {
                     this.ctx.save();
                     this.ctx.globalAlpha = particle.life / particle.maxLife;
-                    this.ctx.fillStyle = '#fff';
-                    this.ctx.beginPath();
-                    this.ctx.arc(particle.x, particle.y, 3, 0, Math.PI * 2);
-                    this.ctx.fill();
+                    
+                    if (particle.isMega) {
+                        // Gold particles for mega bubbles
+                        this.ctx.fillStyle = '#FFD700';
+                        this.ctx.beginPath();
+                        this.ctx.arc(particle.x, particle.y, 4, 0, Math.PI * 2);
+                        this.ctx.fill();
+                        
+                        // Add sparkle effect
+                        this.ctx.strokeStyle = '#FFF';
+                        this.ctx.lineWidth = 1;
+                        this.ctx.stroke();
+                    } else {
+                        this.ctx.fillStyle = '#fff';
+                        this.ctx.beginPath();
+                        this.ctx.arc(particle.x, particle.y, 3, 0, Math.PI * 2);
+                        this.ctx.fill();
+                    }
+                    
                     this.ctx.restore();
                 });
             }
@@ -567,11 +2574,19 @@
 
                 requestAnimationFrame(() => this.gameLoop());
             }
+
+            // Test function to add tokens for debugging
+            addTokens(amount = 50) {
+                this.gameState.tokens += amount;
+                this.updateUI();
+                this.saveTokens();
+                console.log(`Added ${amount} tokens. Total: ${this.gameState.tokens}`);
+            }
         }
 
         // Start the game when page loads
         window.addEventListener('load', () => {
-            new BubblePigGame();
+            window.game = new BubblePigGame();
         });
 
         // Prevent scrolling and zooming
