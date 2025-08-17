@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Bubble Pig Sailor Moon Tapper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #9b59b6, #8e44ad);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            max-width: 375px;
+            max-height: 812px;
+            overflow: hidden;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent);
+        }
+
+        #gameCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            touch-action: none;
+        }
+
+        #ui {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        #tokenCounter {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 3px solid #ff6b9d;
+            font-size: 18px;
+            font-weight: bold;
+            color: #8e44ad;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        #tokenCounter.bounce {
+            animation: tokenBounce 0.3s ease;
+        }
+
+        @keyframes tokenBounce {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        #comboCounter {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        #comboCounter.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        #levelIndicator {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #8e44ad;
+        }
+
+        #powerUpButton {
+            position: absolute;
+            bottom: 40px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            pointer-events: auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        #powerUpButton:active {
+            transform: scale(0.95);
+        }
+
+        #powerUpButton.active {
+            animation: powerUpPulse 1s ease infinite;
+        }
+
+        @keyframes powerUpPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(243, 156, 18, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 6px 20px rgba(243, 156, 18, 0.8); }
+        }
+
+        .floatingText {
+            position: absolute;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.8);
+            }
+        }
+
+        #sailorPig {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 80px;
+            animation: pigBob 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pigBob {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .bubble {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3), transparent);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            animation: bubbleFloat 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+
+        @keyframes bubbleFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 0.6s ease-out forwards;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) translateY(-30px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui">
+            <div id="tokenCounter">🪙 0 $PIGMOON</div>
+            <div id="comboCounter">COMBO x1</div>
+            <div id="levelIndicator">Level 1</div>
+            <button id="powerUpButton">⚡</button>
+            <div id="sailorPig">🐷‍⚓</div>
+        </div>
+    </div>
+
+    <script>
+        class BubblePigGame {
+            constructor() {
+                this.canvas = document.getElementById('gameCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.ui = {
+                    tokenCounter: document.getElementById('tokenCounter'),
+                    comboCounter: document.getElementById('comboCounter'),
+                    levelIndicator: document.getElementById('levelIndicator'),
+                    powerUpButton: document.getElementById('powerUpButton'),
+                    sailorPig: document.getElementById('sailorPig')
+                };
+
+                this.setupCanvas();
+                this.initializeGame();
+                this.setupEventListeners();
+                this.gameLoop();
+            }
+
+            setupCanvas() {
+                const rect = this.canvas.getBoundingClientRect();
+                this.canvas.width = rect.width * window.devicePixelRatio;
+                this.canvas.height = rect.height * window.devicePixelRatio;
+                this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                
+                this.canvasWidth = rect.width;
+                this.canvasHeight = rect.height;
+            }
+
+            initializeGame() {
+                this.gameState = {
+                    tokens: this.loadTokens(),
+                    level: 1,
+                    combo: 0,
+                    comboTimer: 0,
+                    maxComboTime: 120, // 2 seconds at 60fps
+                    powerUpActive: false,
+                    powerUpTimer: 0,
+                    maxPowerUpTime: 300, // 5 seconds at 60fps
+                    bubbleSpawnTimer: 0,
+                    bubbleSpawnRate: 90, // 1.5 seconds at 60fps
+                    score: 0
+                };
+
+                this.bubbles = [];
+                this.particles = [];
+                this.floatingTexts = [];
+                this.maxBubbles = 12;
+
+                this.updateUI();
+            }
+
+            loadTokens() {
+                const saved = localStorage.getItem('pigmoonTokens');
+                return saved ? parseInt(saved) : 0;
+            }
+
+            saveTokens() {
+                localStorage.setItem('pigmoonTokens', this.gameState.tokens.toString());
+            }
+
+            setupEventListeners() {
+                // Touch events for bubbles
+                this.canvas.addEventListener('touchstart', (e) => this.handleTouch(e), { passive: false });
+                this.canvas.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+                
+                // Power-up button
+                this.ui.powerUpButton.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.activatePowerUp();
+                });
+
+                // Prevent zoom
+                document.addEventListener('gesturestart', (e) => e.preventDefault());
+                document.addEventListener('gesturechange', (e) => e.preventDefault());
+            }
+
+            handleTouch(event) {
+                event.preventDefault();
+                
+                const rect = this.canvas.getBoundingClientRect();
+                const touches = event.changedTouches;
+
+                for (let i = 0; i < touches.length; i++) {
+                    const touch = touches[i];
+                    const x = touch.clientX - rect.left;
+                    const y = touch.clientY - rect.top;
+
+                    this.checkBubbleHit(x, y);
+                }
+            }
+
+            checkBubbleHit(x, y) {
+                for (let i = this.bubbles.length - 1; i >= 0; i--) {
+                    const bubble = this.bubbles[i];
+                    const dx = x - bubble.x;
+                    const dy = y - bubble.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < bubble.radius) {
+                        this.popBubble(bubble, i, x, y);
+                        break;
+                    }
+                }
+            }
+
+            popBubble(bubble, index, x, y) {
+                // Remove bubble
+                this.bubbles.splice(index, 1);
+
+                // Calculate points
+                let points = 1;
+                if (this.gameState.powerUpActive) {
+                    points *= 2;
+                }
+                if (this.gameState.combo > 1) {
+                    points *= Math.min(this.gameState.combo, 5);
+                }
+
+                // Update game state
+                this.gameState.tokens += points;
+                this.gameState.combo++;
+                this.gameState.comboTimer = this.gameState.maxComboTime;
+                this.gameState.score += points;
+
+                // Create pop effects
+                this.createParticles(bubble.x, bubble.y);
+                this.createFloatingText(`+${points} $PIGMOON`, bubble.x, bubble.y);
+
+                // Update UI
+                this.updateUI();
+                this.saveTokens();
+
+                // Check level progression
+                this.checkLevelUp();
+            }
+
+            createParticles(x, y) {
+                const particleCount = 8;
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = (Math.PI * 2 * i) / particleCount;
+                    const speed = 2 + Math.random() * 3;
+                    
+                    this.particles.push({
+                        x: x,
+                        y: y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        life: 30,
+                        maxLife: 30
+                    });
+                }
+            }
+
+            createFloatingText(text, x, y) {
+                const floatingText = document.createElement('div');
+                floatingText.className = 'floatingText';
+                floatingText.textContent = text;
+                floatingText.style.left = x + 'px';
+                floatingText.style.top = y + 'px';
+                
+                document.getElementById('gameContainer').appendChild(floatingText);
+
+                setTimeout(() => {
+                    if (floatingText.parentNode) {
+                        floatingText.parentNode.removeChild(floatingText);
+                    }
+                }, 1000);
+            }
+
+            activatePowerUp() {
+                if (this.gameState.tokens >= 10) {
+                    this.gameState.tokens -= 10;
+                    this.gameState.powerUpActive = true;
+                    this.gameState.powerUpTimer = this.gameState.maxPowerUpTime;
+                    this.ui.powerUpButton.classList.add('active');
+                    this.updateUI();
+                    this.saveTokens();
+                }
+            }
+
+            spawnBubble() {
+                if (this.bubbles.length < this.maxBubbles) {
+                    const radius = 30;
+                    const x = radius + Math.random() * (this.canvasWidth - radius * 2);
+                    const y = radius + Math.random() * (this.canvasHeight - radius * 2 - 200); // Avoid bottom area
+
+                    this.bubbles.push({
+                        x: x,
+                        y: y,
+                        radius: radius,
+                        life: 300, // 5 seconds at 60fps
+                        maxLife: 300,
+                        alpha: 1,
+                        bob: Math.random() * Math.PI * 2
+                    });
+                }
+            }
+
+            updateBubbles() {
+                for (let i = this.bubbles.length - 1; i >= 0; i--) {
+                    const bubble = this.bubbles[i];
+                    bubble.life--;
+                    bubble.bob += 0.02;
+                    
+                    // Fade out when life is low
+                    if (bubble.life < 60) {
+                        bubble.alpha = bubble.life / 60;
+                    }
+
+                    // Remove expired bubbles
+                    if (bubble.life <= 0) {
+                        this.bubbles.splice(i, 1);
+                    }
+                }
+            }
+
+            updateParticles() {
+                for (let i = this.particles.length - 1; i >= 0; i--) {
+                    const particle = this.particles[i];
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    particle.life--;
+
+                    if (particle.life <= 0) {
+                        this.particles.splice(i, 1);
+                    }
+                }
+            }
+
+            updateGameState() {
+                // Update combo timer
+                if (this.gameState.combo > 0) {
+                    this.gameState.comboTimer--;
+                    if (this.gameState.comboTimer <= 0) {
+                        this.gameState.combo = 0;
+                    }
+                }
+
+                // Update power-up timer
+                if (this.gameState.powerUpActive) {
+                    this.gameState.powerUpTimer--;
+                    if (this.gameState.powerUpTimer <= 0) {
+                        this.gameState.powerUpActive = false;
+                        this.ui.powerUpButton.classList.remove('active');
+                    }
+                }
+
+                // Spawn bubbles
+                this.gameState.bubbleSpawnTimer--;
+                if (this.gameState.bubbleSpawnTimer <= 0) {
+                    this.spawnBubble();
+                    this.gameState.bubbleSpawnTimer = this.gameState.bubbleSpawnRate - (this.gameState.level * 5);
+                }
+            }
+
+            checkLevelUp() {
+                const newLevel = Math.floor(this.gameState.score / 100) + 1;
+                if (newLevel > this.gameState.level) {
+                    this.gameState.level = newLevel;
+                    this.createFloatingText('LEVEL UP!', this.canvasWidth / 2, this.canvasHeight / 2);
+                }
+            }
+
+            updateUI() {
+                this.ui.tokenCounter.textContent = `🪙 ${this.gameState.tokens} $PIGMOON`;
+                this.ui.tokenCounter.classList.add('bounce');
+                setTimeout(() => this.ui.tokenCounter.classList.remove('bounce'), 300);
+
+                if (this.gameState.combo > 1) {
+                    this.ui.comboCounter.textContent = `COMBO x${this.gameState.combo}`;
+                    this.ui.comboCounter.classList.add('show');
+                } else {
+                    this.ui.comboCounter.classList.remove('show');
+                }
+
+                this.ui.levelIndicator.textContent = `Level ${this.gameState.level}`;
+            }
+
+            render() {
+                // Clear canvas
+                this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+                // Draw bubbles
+                this.bubbles.forEach(bubble => {
+                    this.ctx.save();
+                    this.ctx.globalAlpha = bubble.alpha;
+                    
+                    const bobOffset = Math.sin(bubble.bob) * 5;
+                    const x = bubble.x;
+                    const y = bubble.y + bobOffset;
+
+                    // Bubble gradient
+                    const gradient = this.ctx.createRadialGradient(
+                        x - bubble.radius * 0.3, y - bubble.radius * 0.3, 0,
+                        x, y, bubble.radius
+                    );
+                    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+                    gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.3)');
+                    gradient.addColorStop(1, 'rgba(255, 255, 255, 0.1)');
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, bubble.radius, 0, Math.PI * 2);
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fill();
+
+                    // Bubble border
+                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+                    this.ctx.lineWidth = 2;
+                    this.ctx.stroke();
+
+                    this.ctx.restore();
+                });
+
+                // Draw particles
+                this.particles.forEach(particle => {
+                    this.ctx.save();
+                    this.ctx.globalAlpha = particle.life / particle.maxLife;
+                    this.ctx.fillStyle = '#fff';
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, 3, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.restore();
+                });
+            }
+
+            gameLoop() {
+                this.updateGameState();
+                this.updateBubbles();
+                this.updateParticles();
+                this.render();
+
+                requestAnimationFrame(() => this.gameLoop());
+            }
+        }
+
+        // Start the game when page loads
+        window.addEventListener('load', () => {
+            new BubblePigGame();
+        });
+
+        // Prevent scrolling and zooming
+        document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+        document.addEventListener('gesturestart', (e) => e.preventDefault());
+        document.addEventListener('gesturechange', (e) => e.preventDefault());
+        document.addEventListener('gestureend', (e) => e.preventDefault());
+    </script>
+</body>
+</html>
